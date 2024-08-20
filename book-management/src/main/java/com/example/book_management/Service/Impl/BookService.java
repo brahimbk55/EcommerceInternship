@@ -1,4 +1,4 @@
-package com.example.book_management.Service;
+package com.example.book_management.Service.Impl;
 
 import com.example.book_management.Entities.Book;
 import com.example.book_management.Repository.BookRepository;
