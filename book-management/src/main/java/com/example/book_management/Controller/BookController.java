@@ -1,7 +1,7 @@
 package com.example.book_management.Controller;
 
 import com.example.book_management.Entities.Book;
-import com.example.book_management.Service.BookService;
+import com.example.book_management.Service.Impl.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
