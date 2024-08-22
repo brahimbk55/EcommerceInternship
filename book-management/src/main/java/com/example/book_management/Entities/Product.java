@@ -1,6 +1,7 @@
 package com.example.book_management.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     // Getters and setters
 }
