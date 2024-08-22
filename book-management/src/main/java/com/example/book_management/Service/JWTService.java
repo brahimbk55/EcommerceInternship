@@ -10,11 +10,11 @@ public interface JWTService {
 
     String extractUsername(String token);
 
-    String generateToken(UserDetails userDetails);
+    String generateToken(UserDetails userDetails, Long id);
 
     boolean isTokenValid(String token,UserDetails userDetails);
 
-    String generateRefrechToken(HashMap<String,Object> extraClaims, UserDetails userDetails);
+    String generateRefrechToken(HashMap<String,Object> extraClaims, UserDetails userDetails, Long id);
 
 
 }

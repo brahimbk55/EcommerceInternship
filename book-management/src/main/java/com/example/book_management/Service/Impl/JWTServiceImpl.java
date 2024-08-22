@@ -21,31 +21,41 @@ public class JWTServiceImpl implements JWTService {
 
 
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails, Long userId) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTime(new Date());
         Date date = calendar.getTime();
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         Date newDate = calendar.getTime();
-        return Jwts.builder().setSubject(userDetails.getUsername())
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .claim("userId", userId) // Include userId as a claim
                 .setIssuedAt(date)
                 .setExpiration(newDate)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String generateRefrechToken(HashMap<String,Object>extraClaims, UserDetails userDetails){
+    public String generateRefrechToken(HashMap<String, Object> extraClaims, UserDetails userDetails, Long userId) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTime(new Date());
         Date date = calendar.getTime();
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         Date newDate = calendar.getTime();
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .claim("userId", userId) // Include userId as a claim
                 .setIssuedAt(date)
                 .setExpiration(newDate)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    public Long extractUserId(String token) {
+        return extractClaim(token, claims -> Long.parseLong(claims.get("userId").toString()));
+    }
+
 
 
     public String extractUsername(String token){

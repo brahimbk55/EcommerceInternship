@@ -64,8 +64,8 @@ public class AuthenticationImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(signInRequest.getEmail(), signInRequest.getPassword())
         );
 
-        var jwt = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefrechToken(new HashMap<>(), user);
+        var jwt = jwtService.generateToken(user,user.getId().longValue());
+        var refreshToken = jwtService.generateRefrechToken(new HashMap<>(), user, user.getId().longValue());
 
         JWTAuthenticationResponse jwtAuthenticationResponse = new JWTAuthenticationResponse();
         jwtAuthenticationResponse.setToken(jwt);
@@ -81,7 +81,7 @@ public class AuthenticationImpl implements AuthenticationService {
         App_user appuser =userRepository.findByEmail(userEmail).orElseThrow();
         if (jwtService.isTokenValid(refrechTokenRequest.getToken(), appuser)){
 
-            var jwt=jwtService.generateToken(appuser);
+            var jwt=jwtService.generateToken(appuser, appuser.getId().longValue());
 
             JWTAuthenticationResponse jwtAuthenticationResponse = new JWTAuthenticationResponse();
             jwtAuthenticationResponse.setToken(jwt);
